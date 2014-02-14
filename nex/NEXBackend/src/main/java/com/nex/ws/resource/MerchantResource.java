@@ -1,5 +1,6 @@
 package com.nex.ws.resource;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -18,8 +19,8 @@ import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nex.core.Address;
 import com.nex.core.Balance;
-import com.nex.core.Merchant;
 import com.nex.core.MerchantResponse;
 
 @Path("/merchant/{guid}")
@@ -126,6 +127,42 @@ public class MerchantResource {
 		
 		response.setBalance(0);
 		return response;
+	}
+	
+	public Response list(@PathParam("guid") String guid,@PathParam("password") String password){
+		if (guid.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter guid").type("text/plain").build());
+		}
+		if (password.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter Password").type("text/plain").build());
+		}
+		List <Address> response = null;
+		String json = new Gson().toJson(response );
+		return Response.status(500).entity(json).type("text/plain").build();
+	}
+	
+	public Response newAddress(@PathParam("guid") String guid,
+			@PathParam("password") String password,
+			@PathParam("second_password") String second_password,
+			@PathParam("label") String label){
+		Address response =  new Address();
+		
+		if (guid.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter guid").type("text/plain").build());
+		}
+		if (password.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter Password").type("text/plain").build());
+		}
+		if (second_password.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter second_password").type("text/plain").build());
+		}
+		if (label.isEmpty()){
+			throw new WebApplicationException(Response.status(422).entity("Missing Parameter label").type("text/plain").build());
+		}
+		response.setAddress("address");
+		response.setLabel("label");
+		String json = new Gson().toJson(response );
+		return Response.status(500).entity(json).type("text/plain").build();		
 	}
 
 }
