@@ -1,7 +1,9 @@
 package com.nex.ws.resource;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -67,6 +69,7 @@ public class MerchantResource {
 	}
 	
 	
+	@SuppressWarnings("rawtypes")
 	@GET
 	@Path("/sendmany")
 	public MerchantResponse sendmany (@PathParam("guid") String guid,
@@ -77,9 +80,9 @@ public class MerchantResource {
 			@QueryParam("fee") Optional<Integer> fee){
 		MerchantResponse response = new MerchantResponse();
 		Gson gson = new Gson();
-	    Type mapType = new TypeToken<Map<String,Map<String, String>>>() {}.getType();
-	    
-		Map<String,Map<String, String>> map = gson.fromJson(recipients.toString(), mapType);
+	    Type mapType = new TypeToken<Map<String, String>>() {}.getType();
+	    logger.info(recipients.get());
+		Map<String, Integer> map = gson.fromJson(recipients.get(), mapType);
 		
 		
 		if (guid.isEmpty()){
@@ -96,17 +99,18 @@ public class MerchantResource {
 		}
 		
 		// Get the count...
-	    int count = Integer.parseInt(map.get("0").get("count"));
+		int count = map.size();
+	    logger.info("count: "+String.valueOf(count));
 
-	    // Get each numbered entry...
-	    for (int i = 1; i <= count; i++){
-	    	 logger.info("Entry " + i + ":");
-	         Map<String, String> numberedEntry = map.get(String.valueOf(i));
-	         for (String key : numberedEntry.keySet()){
-	        	 logger.info("guid=%s, amount=%s\n", key, numberedEntry.get(key));
-	        	 payment(guid, password, second_password, Optional.of(key), Optional.of(new Integer(numberedEntry.get(key))), null, shared, fee, null);
-	         }
-	    }
+	    Iterator iterator = map.entrySet().iterator();
+	    while (iterator.hasNext()) {
+			Map.Entry mapEntry = (Map.Entry) iterator.next();
+			logger.info("The key is: " + mapEntry.getKey()
+				+ ",value is :" + mapEntry.getValue());
+			String key = (String) mapEntry.getKey();
+			String value= (String) mapEntry.getValue();
+			payment(guid, password, second_password, Optional.of(key), Optional.of(new Integer(value)), null, shared, fee, null);
+		}
 		
 		response.setMessage("message");
 		response.setTx_hash("tx_hash");

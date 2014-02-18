@@ -23,7 +23,7 @@ extends ResourceTest{
 	}
 	
 	@Test
-	 public void testPostSample() throws Exception {
+	 public void create() throws Exception {
 		String wallet ="{\"password\":\"password12345\",\"api_code\":\"code\"}";
 		client().resource("/create_wallet").type(MediaType.APPLICATION_JSON_TYPE).post(ClientResponse.class, wallet);
 	}
