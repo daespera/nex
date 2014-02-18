@@ -36,4 +36,23 @@ extends ResourceTest{
 		
 		client().resource("/merchant/023456789/sendmany?password=password&second_password=secondpassword&recipients="+URLEncoder.encode(recipients, "UTF-8")).get(ClientResponse.class);
 	}
+	
+	@Test
+	public void balance() {
+		
+		
+		client().resource("/merchant/023456789/balance?password=password").get(ClientResponse.class);
+	}
+	
+	@Test
+	public void list() {
+		
+		
+		client().resource("/merchant/023456789/list?password=password").get(ClientResponse.class);
+	}
+	@Test
+	public void newAddress() {		
+		
+		client().resource("/merchant/023456789/list?password=password&second_password=secondpassword&label=label").get(ClientResponse.class);
+	}
 }

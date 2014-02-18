@@ -135,6 +135,8 @@ public class MerchantResource {
 		return response;
 	}
 	
+	@GET
+	@Path("/list")
 	public Response list(@PathParam("guid") String guid,
 			@QueryParam("password") Optional<String> password){
 		if (guid.isEmpty()){
@@ -148,6 +150,8 @@ public class MerchantResource {
 		return Response.status(500).entity(json).type("text/plain").build();
 	}
 	
+	@GET
+	@Path("/newAddress")
 	public Response newAddress(@PathParam("guid") String guid,
 			@QueryParam("password") Optional<String> password,
 			@QueryParam("second_password") Optional<String> second_password,
