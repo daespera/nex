@@ -38,21 +38,18 @@ extends ResourceTest{
 	}
 	
 	@Test
-	public void balance() {
-		
-		
+	public void balance() {				
 		client().resource("/merchant/023456789/balance?password=password").get(ClientResponse.class);
 	}
 	
 	@Test
-	public void list() {
-		
+	public void list() {		
 		
 		client().resource("/merchant/023456789/list?password=password").get(ClientResponse.class);
 	}
 	@Test
 	public void newAddress() {		
 		
-		client().resource("/merchant/023456789/list?password=password&second_password=secondpassword&label=label").get(ClientResponse.class);
+		client().resource("/merchant/023456789/newAddress?password=password&second_password=secondpassword&label=label").get(ClientResponse.class);
 	}
 }
