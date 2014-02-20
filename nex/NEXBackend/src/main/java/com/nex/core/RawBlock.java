@@ -1,5 +1,7 @@
 package com.nex.core;
 
+import java.util.List;
+
 public class RawBlock {
 	private String hash;
 	private Integer ver;	
@@ -15,8 +17,8 @@ public class RawBlock {
 	private Integer height;
 	private Integer received_time;
 	private String relayed_by;
+	private List<RawTransaction> tx;
 	
-	//"tx":[--Array of Transactions--]
 	public String getHash() {
 		return hash;
 	}
@@ -100,5 +102,11 @@ public class RawBlock {
 	}
 	public void setRelayed_by(String relayed_by) {
 		this.relayed_by = relayed_by;
+	}
+	public List<RawTransaction> getTx() {
+		return tx;
+	}
+	public void setTx(List<RawTransaction> tx) {
+		this.tx = tx;
 	}
 }
