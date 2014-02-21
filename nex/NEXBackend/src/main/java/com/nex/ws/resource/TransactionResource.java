@@ -22,13 +22,13 @@ import com.nex.core.RawBlock;
 import com.nex.core.RawTransaction;
 import com.nex.core.UnspentOutput;
 
-
+@Path("/")
 @Produces(value = MediaType.APPLICATION_JSON)
 public class TransactionResource {
 	final static Logger logger = LoggerFactory.getLogger(TransactionResource.class);
 	
 	@GET
-	@Path("/rawblock/{blockIndexHash}")
+	@Path("rawblock/{blockIndexHash}")
 	public RawBlock rawBlock(@PathParam("blockIndexHash") String blockIndexHash,
 			@QueryParam("format") Optional <String> format){
 		RawBlock response = new RawBlock();
@@ -36,14 +36,14 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/block-index/{blockIndexHash}")
+	@Path("block-index/{blockIndexHash}")
 	public RawBlock blockIndex(@PathParam("blockIndexHash") String blockIndexHash,
 			@QueryParam("format") Optional <String> format){
 		return rawBlock(blockIndexHash, format);
 	}
 	
 	@GET
-	@Path("/rawtx/{blockIndexHash}")
+	@Path("rawtx/{blockIndexHash}")
 	public RawTransaction rawTX(@PathParam("blockIndexHash") String blockIndexHash,
 			@QueryParam("format") Optional <String> format){
 		RawTransaction response = new RawTransaction();
@@ -51,14 +51,14 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/tx-index/{blockIndexHash}")
+	@Path("tx-index/{blockIndexHash}")
 	public RawTransaction txIndex(@PathParam("blockIndexHash") String blockIndexHash,
 			@QueryParam("format") Optional <String> format){
 		return rawTX(blockIndexHash, format);
 	}
 	
 	@GET
-	@Path("/charts/{chartType}")
+	@Path("charts/{chartType}")
 	public List <Chart> charts(@PathParam("chartType") String chartType,
 			@QueryParam("format") Optional <String> format){
 		List <Chart> values = null;
@@ -66,7 +66,7 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/block-height/{blockHeight}")
+	@Path("block-height/{blockHeight}")
 	public List <RawBlock> blockHeight(@PathParam("blockHeight") String blockHeight,
 			@QueryParam("format") Optional <String> format){
 		List <RawBlock> blocks = null;
@@ -74,7 +74,7 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/address/{$hash160BitcoinAddr}")
+	@Path("address/{hash160BitcoinAddr}")
 	public RawAddress address(@PathParam("hash160BitcoinAddr") String hash160BitcoinAddr,
 			@QueryParam("format") Optional <String> format){
 		RawAddress response = new RawAddress();
@@ -82,7 +82,7 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/rawaddr/{$hash160BitcoinAddr}")
+	@Path("rawaddr/{hash160BitcoinAddr}")
 	public RawAddress rawaddr(@PathParam("hash160BitcoinAddr") String hash160BitcoinAddr,
 			@QueryParam("format") Optional <String> format){
 		return address(hash160BitcoinAddr, format);
@@ -90,7 +90,7 @@ public class TransactionResource {
 	
 	@SuppressWarnings("null")
 	@GET
-	@Path("/multiaddr")
+	@Path("multiaddr")
 	public List <RawAddress> multiaddr(Optional <String> active){
 		String[] split = active.get().split("|");
 		List <RawAddress> addresses = null;
@@ -101,8 +101,8 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/unspent")
-	public List <UnspentOutput> unspent(Optional <String> active){
+	@Path("unspent")
+	public List <UnspentOutput> unspent(@QueryParam("active") Optional <String> active){
 		String[] split = active.get().split("|");
 		List <UnspentOutput> unspent_outputs = null;
 		for (int i = 0; i < split.length; i++) {
@@ -112,7 +112,7 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/latestblock")
+	@Path("latestblock")
 	public LatestBlock latestBlock(){
 		LatestBlock response = new LatestBlock();
 		StringBuilder sb = new StringBuilder();
@@ -123,21 +123,21 @@ public class TransactionResource {
 	}
 	
 	@GET
-	@Path("/unconfirmed-transactions")
+	@Path("unconfirmed-transactions")
 	public List<RawTransaction> unconfirmedTransactions(@QueryParam("format") Optional <String> format){
 		List<RawTransaction> txs = null;
 		return txs;
 	}
 	
 	@GET
-	@Path("/blocks/{timePoolName}")
+	@Path("blocks/{timePoolName}")
 	public List<Block> blocks(@PathParam("timePoolName") String timePoolName ){
 		List<Block> blocks = null;
 		return blocks;
 	}
 	
 	@GET
-	@Path("/inv/{hash}")
+	@Path("inv/{hash}")
 	public InventoryData inv(@PathParam("hash") String hash,
 			@QueryParam("format") Optional <String> format){
 		InventoryData response = new InventoryData();
